@@ -3,20 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>nulldonut / projects</title>
+<title>nulldonut / dev</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
  --bg:#08080a;
  --surface:#0e0e12;
+ --surface-hover:#12121a;
  --border:#1a1a22;
  --text:#e8e8ed;
  --muted:#6b6b7a;
  --accent:#00ff88;
  --accent-dim:rgba(0,255,136,.1);
+ --accent-glow:rgba(0,255,136,.06);
  --radius:16px;
+ --radius-sm:8px;
  --font-sans:'Outfit','system-ui',sans-serif;
  --font-mono:'JetBrains Mono','SF Mono',monospace;
 }
@@ -34,84 +37,110 @@ body::before{
  position:fixed;
  inset:0;
  background-image:
-  linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);
+  linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);
  background-size:48px 48px;
  pointer-events:none;
  z-index:0;
 }
 
-.container{max-width:900px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.container{
+ max-width:960px;margin:0 auto;padding:0 24px;
+ position:relative;z-index:1;
+}
 
 /* hero */
 .hero{padding:80px 0 40px}
 .hero .name{
- font-size:clamp(2rem,4vw,3rem);
+ font-size:clamp(2.2rem,5vw,3.4rem);
  font-weight:700;
  letter-spacing:-.03em;
  line-height:1.1;
- margin-bottom:8px;
+ margin-bottom:6px;
 }
-.hero .name span{color:var(--accent)}
+.hero .name .accent{color:var(--accent)}
+.hero .cursor{
+ display:inline-block;
+ width:3px;height:1.1em;
+ background:var(--accent);
+ vertical-align:text-bottom;
+ margin-left:4px;
+ animation:blink 1s step-end infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 .hero .role{
  font-size:1rem;color:var(--muted);
- margin-bottom:16px;
+ margin-bottom:14px;
 }
 .hero p{
- font-size:.92rem;color:var(--muted);
- max-width:540px;
- line-height:1.6;
+ font-size:.9rem;color:var(--muted);
+ max-width:520px;line-height:1.65;
  margin-bottom:24px;
 }
 .hero .tags{
- display:flex;flex-wrap:wrap;gap:8px;
+ display:flex;flex-wrap:wrap;gap:6px;
 }
 .hero .tags span{
  font-family:var(--font-mono);
- font-size:.72rem;
+ font-size:.7rem;
  padding:4px 12px;
  border:1px solid var(--border);
  border-radius:100px;
  color:var(--text);
  background:var(--surface);
+ transition:border-color .2s,background .2s;
 }
-.hero .tags span:hover{border-color:var(--accent)}
-.hero .tags span:active{transform:scale(.96)}
+.hero .tags span:hover{
+ border-color:var(--accent);
+ background:var(--accent-dim);
+}
 
 /* about */
 .about{
  padding:48px 0;
  border-top:1px solid var(--border);
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:32px;
+ align-items:start;
 }
 .about h2{
- font-size:1.1rem;font-weight:600;
+ font-size:1rem;font-weight:600;
  margin-bottom:8px;
 }
 .about p{
- font-size:.9rem;color:var(--muted);
- max-width:600px;line-height:1.6;
+ font-size:.88rem;color:var(--muted);
+ line-height:1.65;
 }
-.about .links{
- display:flex;gap:16px;margin-top:16px;
-}
+.about .links{display:flex;flex-direction:column;gap:10px}
 .about .links a{
  font-family:var(--font-mono);
- font-size:.82rem;color:var(--muted);
- transition:color .2s,transform .2s;
+ font-size:.82rem;
+ color:var(--muted);
+ display:flex;align-items:center;gap:8px;
+ padding:10px 14px;
+ border:1px solid var(--border);
+ border-radius:var(--radius-sm);
+ transition:border-color .2s,color .2s,transform .2s;
 }
-.about .links a:hover{color:var(--accent)}
-.about .links a:active{transform:scale(.96)}
+.about .links a:hover{border-color:var(--accent);color:var(--accent)}
+.about .links a:active{transform:scale(.97)}
+.about .links a .dot{
+ width:8px;height:8px;border-radius:50%;
+ display:inline-block;
+}
+.about .links a .dot.gh{background:#fff}
+.about .links a .dot.cb{background:#2185d0}
 
 /* projects */
 .projects{padding:48px 0}
 .projects h2{
- font-size:1.1rem;font-weight:600;
- margin-bottom:24px;
+ font-size:1rem;font-weight:600;
+ margin-bottom:20px;
 }
-
 .grid{
  display:grid;
- grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+ grid-template-columns:1fr 1fr;
  gap:12px;
 }
 .card{
@@ -119,86 +148,148 @@ body::before{
  border:1px solid var(--border);
  border-radius:var(--radius);
  padding:20px;
- transition:border-color .25s,transform .25s;
+ transition:border-color .25s,transform .25s,box-shadow .25s;
  will-change:transform;
+ position:relative;
 }
-.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card:hover{
+ border-color:var(--accent);
+ transform:translateY(-2px);
+ box-shadow:0 8px 24px var(--accent-glow);
+}
 .card:active{transform:scale(.97)}
+.card.featured{
+ grid-column:1/-1;
+ border-color:var(--accent-dim);
+ background:linear-gradient(135deg,var(--surface),var(--surface-hover));
+}
+.card.featured:hover{
+ border-color:var(--accent);
+ box-shadow:0 8px 32px var(--accent-glow),inset 0 0 0 1px rgba(0,255,136,.05);
+}
+.card .top{
+ display:flex;justify-content:space-between;
+ align-items:flex-start;margin-bottom:10px;
+}
 .card .lang{
  font-family:var(--font-mono);
- font-size:.68rem;color:var(--accent);
+ font-size:.65rem;
+ color:var(--accent);
  background:var(--accent-dim);
  padding:2px 10px;border-radius:100px;
- display:inline-block;margin-bottom:10px;
 }
-.card h2{
- font-size:.95rem;font-weight:600;
+.card .src{
+ font-family:var(--font-mono);
+ font-size:.6rem;
+ padding:2px 8px;border-radius:100px;
+ text-transform:uppercase;
+ letter-spacing:.05em;
+ border:1px solid;
+}
+.card .src.gh{color:#aaa;border-color:#333}
+.card .src.cb{color:#2185d0;border-color:rgba(33,133,208,.3)}
+.card h3{
+ font-size:.9rem;font-weight:600;
  margin-bottom:4px;
 }
 .card p{
- font-size:.82rem;color:var(--muted);
- line-height:1.5;margin-bottom:12px;
+ font-size:.78rem;color:var(--muted);
+ line-height:1.5;margin-bottom:0;
 }
-.card .links{display:flex;gap:12px}
+.card .links{margin-top:14px}
 .card .links a{
  font-family:var(--font-mono);
- font-size:.72rem;color:var(--muted);
+ font-size:.7rem;color:var(--muted);
  display:inline-flex;align-items:center;gap:4px;
- transition:color .2s;position:relative;
+ transition:color .2s,transform .2s;
+ padding:4px 0;position:relative;
 }
-.card .links a:hover{color:var(--accent)}
-.card .links a::after{content:'';position:absolute;inset:-8px}
-.card .links svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.card .links a:hover{color:var(--accent);transform:translateX(2px)}
+.card .arrow{transition:transform .2s;display:inline-block}
+.card .links a:hover .arrow{transform:translateX(3px)}
 
+/* footer */
 footer{
  text-align:center;
  padding:32px 0 40px;
  color:var(--muted);
- font-size:.78rem;
+ font-size:.75rem;
  border-top:1px solid var(--border);
- margin-top:16px;
+ margin-top:8px;
 }
+footer a{color:var(--accent)}
 
+/* animations */
 .fade-in{opacity:0;transform:translateY(16px);transition:opacity .5s cubic-bezier(.2,0,0,1),transform .5s cubic-bezier(.2,0,0,1)}
 .fade-in.visible{opacity:1;transform:translateY(0)}
+.fade-left{opacity:0;transform:translateX(-20px);transition:opacity .5s cubic-bezier(.2,0,0,1),transform .5s cubic-bezier(.2,0,0,1)}
+.fade-left.visible{opacity:1;transform:translateX(0)}
 
+/* reduced motion */
 @media(prefers-reduced-motion:reduce){
- .fade-in{transition:none;opacity:1;transform:none}
- .card:active{transform:none}
- .card:hover{transform:none}
- header a:active{transform:none}
+ .card,.about .links a{transition:none!important}
+ .card:hover,.card:active,.about .links a:active,.hero .tags span{transform:none!important}
+ .fade-in,.fade-left{transition:none;opacity:1;transform:none}
+ .card .links a:hover .arrow{transform:none}
+ .card .links a:hover{transform:none}
 }
 
-@media(max-width:640px){
+/* tablet */
+@media(max-width:768px){
+ .hero{padding:48px 0 28px}
+ .hero .name{font-size:clamp(1.6rem,5vw,2.4rem)}
+ .about{grid-template-columns:1fr;gap:20px}
+ .about .links{flex-direction:row}
  .grid{grid-template-columns:1fr}
- .projects{padding:32px 0}
- .hero{padding:48px 0 32px}
+ .card.featured{grid-column:1}
+}
+
+/* mobile */
+@media(max-width:480px){
+ .container{padding:0 20px}
+ .hero{padding:32px 0 20px}
+ .hero .name{font-size:clamp(1.4rem,7vw,1.8rem)}
+ .hero .cursor{height:.9em}
+ .hero p{font-size:.82rem;margin-bottom:18px}
+ .hero .tags{gap:4px}
+ .hero .tags span{font-size:.62rem;padding:3px 9px}
+ .about{padding:20px 0}
+ .about .links{flex-direction:column}
+ .projects{padding:20px 0}
+ .grid{gap:10px}
+ .card{padding:14px}
+ .card .top{flex-wrap:wrap;gap:6px}
+ .card p{font-size:.75rem}
+ .card h3{font-size:.85rem}
+ footer{padding:16px 0 24px}
 }
 </style>
 </head>
 <body>
 
-<section class="container hero">
- <h1 class="name"><span>nulldonut</span> / shivansh bansal</h1>
+<section class="container hero fade-in">
+ <h1 class="name"><span class="accent">nulldonut</span> / shivansh bansal<span class="cursor"></span></h1>
  <p class="role">C &amp; python developer</p>
- <p>systems programmer, open-source tinkerer, terminal-first. building tools in C and Python that live at the intersection of performance and practicality.</p>
+ <p>systems programmer building tools at the intersection of performance and practicality. open-source, terminal-first, bare-metal curious.</p>
  <div class="tags">
   <span>C</span><span>Python</span><span>Shell</span><span>GDScript</span><span>TypeScript</span><span>Lua</span>
  </div>
 </section>
 
-<section class="container about">
- <h2>about</h2>
- <p>I write systems-level tools, automate everything, and tinker with game engines. My work lives across GitHub and Codeberg — from C utilities that bootstrap environments to Godot RPGs.</p>
+<section class="container about fade-in">
+ <div>
+  <h2>about</h2>
+  <p>I write systems-level tools, automate everything, and tinker with game engines. My work lives across GitHub and Codeberg — from C utilities that bootstrap environments to Godot RPGs.</p>
+ </div>
  <div class="links">
-  <a href="https://github.com/nulldonut" target="_blank" rel="noopener">github &rarr;</a>
-  <a href="https://codeberg.org/shivanshbansal" target="_blank" rel="noopener">codeberg &rarr;</a>
+  <a href="https://github.com/nulldonut" target="_blank" rel="noopener"><span class="dot gh"></span> github/nulldonut <span class="arrow">&rarr;</span></a>
+  <a href="https://codeberg.org/shivanshbansal" target="_blank" rel="noopener"><span class="dot cb"></span> codeberg/shivanshbansal <span class="arrow">&rarr;</span></a>
  </div>
 </section>
 
-<section class="container projects">
+<section class="container projects fade-in">
  <h2>projects</h2>
- <div class="grid" id="grid"><!-- js --></div>
+ <div class="grid" id="grid"></div>
 </section>
 
 <footer class="container">
@@ -207,35 +298,37 @@ footer{
 
 <script>
 const P = [
- {n:"pkglib",l:"C",d:"Automates Termux environment setup from a single config file — installs packages, clones dotfiles, deploys configs.",u:"https://codeberg.org/ShivanshBansal/pkglib",s:"codeberg"},
- {n:"scdm",l:"C",d:"Simple Configuration Dotfiles Manager. Lightweight dotfile utility written in C.",u:"https://codeberg.org/ShivanshBansal/scdm",s:"codeberg"},
- {n:"C-projects",l:"C",d:"System-level experiments and programs in C.",u:"https://github.com/NullDonut/C-projects",s:"github"},
+ {n:"pkglib",l:"C",d:"Automates Termux environment setup from a single config file — installs packages, clones dotfiles, deploys configs.",u:"https://codeberg.org/ShivanshBansal/pkglib",s:"codeberg",f:true},
+ {n:"scdm",l:"C",d:"Lightweight dotfile manager written in C. Simple Configuration Dotfiles Manager.",u:"https://codeberg.org/ShivanshBansal/scdm",s:"codeberg"},
  {n:"action-rpg",l:"GDScript",d:"2D action RPG built from scratch in Godot 4.x.",u:"https://github.com/NullDonut/action-rpg",s:"github"},
  {n:"dotfiles",l:"Lua",d:"Unified dotfiles for nvim, kitty, zsh and more.",u:"https://github.com/NullDonut/dotfiles",s:"github"},
+ {n:"C-projects",l:"C",d:"System-level experiments and programs in C.",u:"https://github.com/NullDonut/C-projects",s:"github"},
 ];
 
 const g = document.getElementById('grid');
 P.forEach((p,i)=>{
  const c = document.createElement('div');
- c.className = 'card fade-in';
- c.style.transitionDelay = `${i * 40}ms`;
+ c.className = 'card fade-in' + (p.f ? ' featured' : '');
+ c.style.transitionDelay = `${i * 50}ms`;
+ const srcClass = p.s === 'github' ? 'gh' : 'cb';
  c.innerHTML = `
-  <span class="lang">${p.l}</span>
-  <h2>${p.n}</h2>
+  <div class="top">
+   <span class="lang">${p.l}</span>
+   <span class="src ${srcClass}">${p.s}</span>
+  </div>
+  <h3>${p.n}</h3>
   <p>${p.d}</p>
   <div class="links">
-   <a href="${p.u}" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-    ${p.s}
-   </a>
+   <a href="${p.u}" target="_blank" rel="noopener">view <span class="arrow">&rarr;</span></a>
   </div>`;
  g.appendChild(c);
 });
 
-const o = new IntersectionObserver((e)=>{
- e.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}});
+// fade observer
+const fo = new IntersectionObserver((e)=>{
+ e.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');fo.unobserve(e.target)}});
 },{threshold:.1});
-document.querySelectorAll('.fade-in').forEach(el=>o.observe(el));
+document.querySelectorAll('.fade-in,.fade-left').forEach(el=>fo.observe(el));
 </script>
 </body>
 </html>
