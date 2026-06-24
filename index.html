@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nulldonut / projects</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+ --bg:#08080a;
+ --surface:#0e0e12;
+ --border:#1a1a22;
+ --text:#e8e8ed;
+ --muted:#6b6b7a;
+ --accent:#00ff88;
+ --accent-dim:rgba(0,255,136,.1);
+ --radius:16px;
+ --font-sans:'Outfit','system-ui',sans-serif;
+ --font-mono:'JetBrains Mono','SF Mono',monospace;
+}
+body{
+ font-family:var(--font-sans);
+ background:var(--bg);
+ color:var(--text);
+ -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--accent);color:var(--bg)}
+a{color:var(--accent);text-decoration:none}
+
+body::before{
+ content:'';
+ position:fixed;
+ inset:0;
+ background-image:
+  linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);
+ background-size:48px 48px;
+ pointer-events:none;
+ z-index:0;
+}
+
+.container{max-width:900px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+/* hero */
+.hero{padding:80px 0 40px}
+.hero .name{
+ font-size:clamp(2rem,4vw,3rem);
+ font-weight:700;
+ letter-spacing:-.03em;
+ line-height:1.1;
+ margin-bottom:8px;
+}
+.hero .name span{color:var(--accent)}
+.hero .role{
+ font-size:1rem;color:var(--muted);
+ margin-bottom:16px;
+}
+.hero p{
+ font-size:.92rem;color:var(--muted);
+ max-width:540px;
+ line-height:1.6;
+ margin-bottom:24px;
+}
+.hero .tags{
+ display:flex;flex-wrap:wrap;gap:8px;
+}
+.hero .tags span{
+ font-family:var(--font-mono);
+ font-size:.72rem;
+ padding:4px 12px;
+ border:1px solid var(--border);
+ border-radius:100px;
+ color:var(--text);
+ background:var(--surface);
+}
+.hero .tags span:hover{border-color:var(--accent)}
+.hero .tags span:active{transform:scale(.96)}
+
+/* about */
+.about{
+ padding:48px 0;
+ border-top:1px solid var(--border);
+}
+.about h2{
+ font-size:1.1rem;font-weight:600;
+ margin-bottom:8px;
+}
+.about p{
+ font-size:.9rem;color:var(--muted);
+ max-width:600px;line-height:1.6;
+}
+.about .links{
+ display:flex;gap:16px;margin-top:16px;
+}
+.about .links a{
+ font-family:var(--font-mono);
+ font-size:.82rem;color:var(--muted);
+ transition:color .2s,transform .2s;
+}
+.about .links a:hover{color:var(--accent)}
+.about .links a:active{transform:scale(.96)}
+
+/* projects */
+.projects{padding:48px 0}
+.projects h2{
+ font-size:1.1rem;font-weight:600;
+ margin-bottom:24px;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+ gap:12px;
+}
+.card{
+ background:var(--surface);
+ border:1px solid var(--border);
+ border-radius:var(--radius);
+ padding:20px;
+ transition:border-color .25s,transform .25s;
+ will-change:transform;
+}
+.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card:active{transform:scale(.97)}
+.card .lang{
+ font-family:var(--font-mono);
+ font-size:.68rem;color:var(--accent);
+ background:var(--accent-dim);
+ padding:2px 10px;border-radius:100px;
+ display:inline-block;margin-bottom:10px;
+}
+.card h2{
+ font-size:.95rem;font-weight:600;
+ margin-bottom:4px;
+}
+.card p{
+ font-size:.82rem;color:var(--muted);
+ line-height:1.5;margin-bottom:12px;
+}
+.card .links{display:flex;gap:12px}
+.card .links a{
+ font-family:var(--font-mono);
+ font-size:.72rem;color:var(--muted);
+ display:inline-flex;align-items:center;gap:4px;
+ transition:color .2s;position:relative;
+}
+.card .links a:hover{color:var(--accent)}
+.card .links a::after{content:'';position:absolute;inset:-8px}
+.card .links svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+footer{
+ text-align:center;
+ padding:32px 0 40px;
+ color:var(--muted);
+ font-size:.78rem;
+ border-top:1px solid var(--border);
+ margin-top:16px;
+}
+
+.fade-in{opacity:0;transform:translateY(16px);transition:opacity .5s cubic-bezier(.2,0,0,1),transform .5s cubic-bezier(.2,0,0,1)}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media(prefers-reduced-motion:reduce){
+ .fade-in{transition:none;opacity:1;transform:none}
+ .card:active{transform:none}
+ .card:hover{transform:none}
+ header a:active{transform:none}
+}
+
+@media(max-width:640px){
+ .grid{grid-template-columns:1fr}
+ .projects{padding:32px 0}
+ .hero{padding:48px 0 32px}
+}
+</style>
+</head>
+<body>
+
+<section class="container hero">
+ <h1 class="name"><span>nulldonut</span> / shivansh bansal</h1>
+ <p class="role">C &amp; python developer</p>
+ <p>systems programmer, open-source tinkerer, terminal-first. building tools in C and Python that live at the intersection of performance and practicality.</p>
+ <div class="tags">
+  <span>C</span><span>Python</span><span>Shell</span><span>GDScript</span><span>TypeScript</span><span>Lua</span>
+ </div>
+</section>
+
+<section class="container about">
+ <h2>about</h2>
+ <p>I write systems-level tools, automate everything, and tinker with game engines. My work lives across GitHub and Codeberg — from C utilities that bootstrap environments to Godot RPGs.</p>
+ <div class="links">
+  <a href="https://github.com/nulldonut" target="_blank" rel="noopener">github &rarr;</a>
+  <a href="https://codeberg.org/shivanshbansal" target="_blank" rel="noopener">codeberg &rarr;</a>
+ </div>
+</section>
+
+<section class="container projects">
+ <h2>projects</h2>
+ <div class="grid" id="grid"><!-- js --></div>
+</section>
+
+<footer class="container">
+ <a href="https://github.com/nulldonut">nulldonut</a>
+</footer>
+
+<script>
+const P = [
+ {n:"pkglib",l:"C",d:"Automates Termux environment setup from a single config file — installs packages, clones dotfiles, deploys configs.",u:"https://codeberg.org/ShivanshBansal/pkglib",s:"codeberg"},
+ {n:"scdm",l:"C",d:"Simple Configuration Dotfiles Manager. Lightweight dotfile utility written in C.",u:"https://codeberg.org/ShivanshBansal/scdm",s:"codeberg"},
+ {n:"C-projects",l:"C",d:"System-level experiments and programs in C.",u:"https://github.com/NullDonut/C-projects",s:"github"},
+ {n:"action-rpg",l:"GDScript",d:"2D action RPG built from scratch in Godot 4.x.",u:"https://github.com/NullDonut/action-rpg",s:"github"},
+ {n:"dotfiles",l:"Lua",d:"Unified dotfiles for nvim, kitty, zsh and more.",u:"https://github.com/NullDonut/dotfiles",s:"github"},
+];
+
+const g = document.getElementById('grid');
+P.forEach((p,i)=>{
+ const c = document.createElement('div');
+ c.className = 'card fade-in';
+ c.style.transitionDelay = `${i * 40}ms`;
+ c.innerHTML = `
+  <span class="lang">${p.l}</span>
+  <h2>${p.n}</h2>
+  <p>${p.d}</p>
+  <div class="links">
+   <a href="${p.u}" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    ${p.s}
+   </a>
+  </div>`;
+ g.appendChild(c);
+});
+
+const o = new IntersectionObserver((e)=>{
+ e.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}});
+},{threshold:.1});
+document.querySelectorAll('.fade-in').forEach(el=>o.observe(el));
+</script>
+</body>
+</html>
